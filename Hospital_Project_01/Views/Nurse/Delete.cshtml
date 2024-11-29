@@ -1,0 +1,26 @@
+﻿@model Nurse
+
+@{
+    ViewData["Title"] = "Delete Nurse";
+}
+
+<div class="container mt-4">
+    <h2>Delete Nurse</h2>
+    <h5>Are you sure you want to delete the following nurse?</h5>
+    <div class="card mt-3">
+        <div class="card-body">
+            <p><strong>Name:</strong> @Model.Name</p>
+            <p><strong>Age:</strong> @Model.Age</p>
+            <p><strong>Address:</strong> @Model.Address</p>
+            <p><strong>Shift:</strong> @Model.Shift.ToString()</p>
+            <p><strong>Salary:</strong> @Model.Salary.ToString("C")</p>
+        </div>
+    </div>
+    <form asp-action="Delete" method="post" class="mt-4">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="AspNetUsersId" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

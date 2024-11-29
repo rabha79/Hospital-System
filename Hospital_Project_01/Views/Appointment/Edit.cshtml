@@ -1,0 +1,94 @@
+﻿@model EditAppointmentVM
+
+<div class="container">
+    <h2 class="text-center mt-4">Edit Appointment</h2>
+
+    <!-- Form for Editing the Appointment -->
+    <form asp-action="EditAppointment" method="post" class="mt-4">
+        @Html.AntiForgeryToken()
+
+        <!-- Hidden field for Appointment ID -->
+        <input type="hidden" asp-for="Id" />
+
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4>Appointment Information</h4>
+            </div>
+            <div class="card-body">
+
+                <!-- Department Selection -->
+                <div class="form-group">
+                    <label asp-for="DepartmentId" class="form-label">Department</label>
+                    <select asp-for="DepartmentId" class="form-control" id="departmentSelect">
+                        <option value="">Select a Department</option>
+                        @foreach (var dept in ViewBag.Departments)
+                        {
+                            if (dept.Id == Model.DepartmentId)
+                            {
+                                <option value="@dept.Id" selected>@dept.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@dept.Id">@dept.Name</option>
+                            }
+                        }
+                    </select>
+
+                    <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                </div>
+
+
+                <!-- Doctor Selection (Dynamically populated based on department) -->
+                <div class="form-group mt-3">
+                    <label asp-for="DoctorId" class="form-label">Doctor</label>
+                    <select asp-for="DoctorId" class="form-control" id="doctorSelect" disabled>
+                        <option value="">Select a Doctor</option>
+                    </select>
+                    <span asp-validation-for="DoctorId" class="text-danger"></span>
+                </div>
+
+                <!-- Appointment Date -->
+                <div class="form-group mt-3">
+                    <label asp-for="Date" class="form-label">Date</label>
+                    <input asp-for="Date" class="form-control" type="datetime-local" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-success">Save Changes</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Load doctors when department is selected
+            $('#departmentSelect').change(function () {
+                var departmentId = $(this).val();
+                $('#doctorSelect').empty().append('<option value="">Select a Doctor</option>').prop('disabled', true);
+
+                if (departmentId) {
+                    $.getJSON('@Url.Action("GetDoctorsByDepartment", "Appointment")', { departmentId: departmentId }, function (data) {
+                        $.each(data, function (i, doctor) {
+                            $('#doctorSelect').append('<option value="' + doctor.id + '">' + doctor.name + '</option>');
+                        });
+                        $('#doctorSelect').prop('disabled', false);
+                    });
+                }
+            });
+
+            // Pre-select doctors if department is already chosen
+            var preselectedDepartmentId = '@Model.DepartmentId';
+            if (preselectedDepartmentId) {
+                $('#departmentSelect').trigger('change');
+            }
+        });
+    </script>
+}

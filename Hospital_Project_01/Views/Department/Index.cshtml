@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Department>
+@{
+    ViewData["Title"] = "Departments";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Departments</h2>
+    
+    <a asp-action="Add" class="btn btn-primary mt-3">Add New Department</a>
+
+    <table class="table table-bordered table-striped mt-4">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Head ID</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var department in Model)
+            {
+                <tr>
+                    <td>@department.Id</td>
+                    <td>@department.Name</td>
+                    <td>@(department.HeadId is null ? "N/A" : $"{department.HeadId}")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@department.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@department.Id" class="btn btn-danger btn-sm">Delete</a>
+                        <a asp-action="Details" asp-route-id="@department.Id" class="btn btn-info btn-sm">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

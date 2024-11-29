@@ -1,0 +1,66 @@
+﻿@model Appointment
+
+@{
+    ViewData["Title"] = "Appointment Details";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Appointment Details</h2>
+
+    <div class="card mt-4">
+        <div class="card-header bg-success text-white">
+            <h4>Appointment Information</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <!-- Appointment Details -->
+                <div class="col-md-6">
+                    <h5>Appointment Info</h5>
+                    <hr />
+                    <div class="form-group">
+                        <label><strong>Appointment ID:</strong></label>
+                        <p>@Model.Id</p>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Patient ID:</strong></label>
+                        <p>@Model.PatientId</p>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Appointment Date:</strong></label>
+                        <p>@Model.Date?.ToString("MM/dd/yyyy HH:mm")</p>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Finished:</strong></label>
+                        <p>@(Model.Finished ? "Yes" : "No")</p>
+                    </div>
+                </div>
+
+                <!-- Doctor Details -->
+                <div class="col-md-6">
+                    <h5>Doctor Info</h5>
+                    <hr />
+                    <div class="form-group">
+                        <label><strong>Doctor Name:</strong></label>
+                        <p>@Model.Doctor?.Name</p>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Doctor Age:</strong></label>
+                        <p>@Model.Doctor?.Age</p>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Doctor Rank:</strong></label>
+                        <p>@Model.Doctor?.Rank.ToString()</p>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Doctor Shift:</strong></label>
+                        <p>@Model.Doctor?.Shift.ToString()</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        <a asp-action="Index" class="btn btn-secondary">All Appointments</a>
+    </div>
+</div>

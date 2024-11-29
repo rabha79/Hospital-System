@@ -1,0 +1,75 @@
+﻿@model MedicalRecord
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="container mt-4">
+    <h2 class="text-center">Medical Record Details</h2>
+
+    <!-- Medical Record Information -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4>Record Information</h4>
+        </div>
+        <div class="card-body">
+            <!-- Record ID -->
+            <div class="form-group">
+                <label><strong>Record ID:</strong></label>
+                <p>@Model.Id</p>
+            </div>
+
+            <!-- Patient ID -->
+            <div class="form-group">
+                <label><strong>Patient ID:</strong></label>
+                <p>@Model.PatientId</p>
+            </div>
+
+            <!-- Diagnose -->
+            <div class="form-group">
+                <label><strong>Diagnose:</strong></label>
+                <p>@Model.Diagnose</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drugs Information -->
+    <div class="card mb-4">
+        <div class="card-header bg-secondary text-white">
+            <h4>Drugs Prescribed</h4>
+        </div>
+        <div class="card-body">
+            @if (Model.Drugs != null && Model.Drugs.Count > 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Drug Name</th>
+                            <th>Dosage</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var drug in Model.Drugs)
+                        {
+                            <tr>
+                                <td>@drug.Name</td> 
+                                <td>@drug.Dose</td> 
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No drugs prescribed for this record.</p>
+            }
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center">
+        <a href="@Url.Action("Index", "MedicalRecord",new { patientId = Model.PatientId } )" class="btn btn-secondary">Back to Records</a>
+    </div>
+</div>
+

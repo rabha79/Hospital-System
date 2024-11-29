@@ -1,0 +1,157 @@
+﻿@* @model IEnumerable<Appointment>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Daily schedule";
+}
+
+<div class="text-center">
+    <h1>Daily schedule</h1>
+    <hr class="border border-info" />
+</div>
+
+
+<br />
+
+@if (!Model.Any())
+{
+    <div>
+        <h2 class="alert alert-danger">No appointments for now</h2>
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Appointment</th>
+                <th>Patient ID</th>
+                <th>Finished</th>
+                <th>Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var appointment in Model)
+            {
+                <tr>
+                    <td>@appointment.Id</td>
+                    <td>@appointment.PatientId</td>
+                    @if (appointment.Finished)
+                    {
+                        <td>Finished</td>
+                    }
+                    else
+                    {
+                        <td>Not finished</td>
+                    }
+                    <td>@appointment.Date</td>
+                    <td>
+                        <a asp-controller="Appointment" asp-action="Details" asp-route-appointmentId="@appointment.Id" class="btn btn-dark">
+                            <i class="bi bi-eye-fill"></i> Details
+                        </a>
+                        <a asp-controller="Appointment" asp-action="ProcessAppointment" asp-route-appointmentId="@appointment.Id" class="btn btn-success">
+                            <i class="bi bi-clipboard2-check-fill"></i> Process
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+
+}
+
+ *@
+
+ @model DoctorScheduleViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Daily Schedule";
+}
+
+<div class="container mt-4">
+    <h1 class="text-center">Daily Schedule for Dr. @Model.Doctor.Name</h1>
+    <hr class="border border-info" />
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Appointments</h5>
+                    <p class="card-text display-4">@Model.TotalAppointments</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Finished Appointments</h5>
+                    <p class="card-text display-4">@Model.FinishedAppointments</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Pending Appointments</h5>
+                    <p class="card-text display-4">@Model.PendingAppointments</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (!Model.Appointments.Any())
+    {
+        <div class="alert alert-info">
+            <h2>No appointments scheduled for today</h2>
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Appointment ID</th>
+                    <th>Patient ID</th>
+                    <th>Status</th>
+                    <th>Time</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var appointment in Model.Appointments)
+                {
+                    <tr>
+                        <td>@appointment.Id</td>
+                        <td>@appointment.PatientId</td>
+                        <td>
+                            @if (appointment.Finished)
+                            {
+                                <span class="badge bg-success">Finished</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            }
+                        </td>
+                        <td>@appointment.Date.ToString()</td>
+                        <td>
+                            <a asp-controller="Appointment" asp-action="Details" asp-route-appointmentId="@appointment.Id" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-eye-fill"></i> Details
+                            </a>
+                            @if (!appointment.Finished)
+                            {
+                                <a asp-controller="Appointment" asp-action="ProcessAppointment" asp-route-appointmentId="@appointment.Id" class="btn btn-sm btn-outline-success">
+                                    <i class="bi bi-clipboard2-check-fill"></i> Process
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

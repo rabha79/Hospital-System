@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Add Appointment";
+}
+@model AddAppointmentVM
+
+
+<div class="container">
+    <h2 class="text-center mt-4">Add New Appointment</h2>
+
+    <form asp-action="AddAppointment" method="post" class="mt-4">
+        <!-- Department Selection -->
+        <div class="form-group">
+            <label asp-for="DepartmentId" class="form-label">Select Department</label>
+            <select id="DepartmentId" asp-for="DepartmentId" class="form-control">
+                <option value="">-- Select a Department --</option>
+                @foreach (var dept in ViewBag.Departments)
+                {
+                    <option value="@dept.Id">@dept.Name</option>
+                }
+            </select>
+            <span asp-validation-for="DepartmentId" class="text-danger"></span>
+        </div>
+
+        <!-- Doctor Selection -->
+        <div class="form-group mt-3">
+            <label asp-for="DoctorId" class="form-label">Select Doctor</label>
+            <select id="DoctorId" asp-for="DoctorId" class="form-control" disabled>
+                <option value="">-- Select a Doctor --</option>
+            </select>
+            <span asp-validation-for="DoctorId" class="text-danger"></span>
+        </div>
+
+        <!-- Patient ID -->
+        <div class="form-group mt-3">
+            <label asp-for="PatientId" class="form-label">Patient ID</label>
+            <input asp-for="PatientId" class="form-control" placeholder="Enter Patient ID" />
+            <span asp-validation-for="PatientId" class="text-danger"></span>
+        </div>
+
+        <!-- Appointment Date -->
+        <div class="form-group mt-3">
+            <label asp-for="Date" class="form-label">Appointment Date</label>
+            <input asp-for="Date" class="form-control" />
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group text-center mt-4">
+            <button type="submit" class="btn btn-success">Save Appointment</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+
+    <script>
+        $(document).ready(function () {
+            // When the department drop-down changes
+            $('#DepartmentId').change(function () {
+                let departmentId = $(this).val();
+                if (departmentId) {
+                    // Enable the Doctor drop-down and load the doctors based on the selected department
+                    $.ajax({
+                        url: '@Url.Action("GetDoctorsByDepartment", "Appointment")',
+                        type: 'GET',
+                        data: { departmentId: departmentId },
+                        success: function (data) {
+                            $('#DoctorId').removeAttr('disabled');
+                            $('#DoctorId').empty();
+                            $('#DoctorId').append('<option value="">-- Select a Doctor --</option>');
+                            $.each(data, function (i, doctor) {
+                                $('#DoctorId').append('<option value="' + doctor.id + '">' + doctor.name + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    // Disable the Doctor drop-down if no department is selected
+                    $('#DoctorId').attr('disabled', 'disabled');
+                    $('#DoctorId').empty().append('<option value="">-- Select a Doctor --</option>');
+                }
+            });
+        });
+    </script>
+}

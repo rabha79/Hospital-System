@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Nurse>
+
+@{
+    ViewData["Title"] = "Nurses";
+}
+
+<div class="container mt-4">
+    <h2>Nurses</h2>
+    <div class="mb-3">
+        <a asp-action="Add" class="btn btn-primary">Add New Nurse</a>
+    </div>
+    <table class="table table-striped mb-3">
+        <thead>
+            <tr>
+                <th>Nurse ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Shift</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var nurse in Model)
+            {
+                <tr>
+                    <td>@nurse.Id</td>
+                    <td>@nurse.Name</td>
+                    <td>@nurse.Age</td>
+                    <td>@nurse.Shift.ToString()</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@nurse.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@nurse.Id" class="btn btn-danger btn-sm">Delete</a>
+                        <a asp-action="Details" asp-route-id="@nurse.Id" class="btn btn-info btn-sm">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

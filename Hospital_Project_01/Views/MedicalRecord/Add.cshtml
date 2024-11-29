@@ -1,0 +1,89 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Add medical record";
+}
+
+@model AddRecordVM
+
+<div class="container">
+    <h2 class="text-center mt-4">Add New Medical Record</h2>
+
+    <!-- Form for Adding New Medical Record -->
+    <form asp-action="Add" method="post" class="mt-4">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4>Medical Record Information</h4>
+            </div>
+            <div class="card-body">
+                <!-- Patient ID -->
+                <div class="form-group">
+                    <label asp-for="PatientId" class="form-label"></label>
+                    <input asp-for="PatientId" class="form-control" placeholder="Enter Patient ID" />
+                    <span asp-validation-for="PatientId" class="text-danger"></span>
+                </div>
+
+                <!-- Diagnose -->
+                <div class="form-group mt-3">
+                    <label asp-for="Diagnose" class="form-label">Diagnose</label>
+                    <textarea asp-for="Diagnose" class="form-control" rows="3" placeholder="Enter diagnosis here..."></textarea>
+                    <span asp-validation-for="Diagnose" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drugs Section -->
+        <div class="card mb-4">
+            <div class="card-header bg-secondary text-white">
+                <h4>Add Drugs</h4>
+            </div>
+            <div class="card-body">
+                <div id="drugs-section">
+                    <!-- Template for dynamic drug entries -->
+                    <div class="form-group mt-2 drug-template" style="display:none;">
+                        <label>Drug Name</label>
+                        <input type="text" class="form-control drug-name" placeholder="Enter drug name" />
+                        <label class="mt-1">Drug Dose</label>
+                        <input type="text" class="form-control drug-dose" placeholder="Enter drug dose" />
+                    </div>
+                </div>
+
+                <!-- Button to Add More Drugs -->
+                <button type="button" id="addDrugBtn" class="btn btn-outline-primary mt-2">Add Drug</button>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-success">Save Record</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            let drugIndex = 0;  // Start the index from 0
+
+            // Add a new drug input set
+            $('#addDrugBtn').click(function () {
+                // Clone the template, make it visible, and update the name attributes
+                let newDrug = $('.drug-template').clone().removeClass('drug-template').removeAttr('style');
+
+                // Assign proper name attributes for dynamic inputs
+                newDrug.find('.drug-name').attr('name', 'Drugs[' + drugIndex + '].Name');
+                newDrug.find('.drug-dose').attr('name', 'Drugs[' + drugIndex + '].Dose');
+
+                // Increment the index for the next drug
+                drugIndex++;
+
+                // Append the new drug input set to the section
+                $('#drugs-section').append(newDrug);
+            });
+        });
+    </script>
+}
+

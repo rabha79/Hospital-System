@@ -1,0 +1,38 @@
+﻿@model DepartmentVM
+@{
+    ViewData["Title"] = "Edit Department";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">Edit Department</h2>
+
+            <form asp-action="Edit" method="post" class="border p-4 shadow-sm rounded">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Enter department name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="HeadId" class="control-label">Head of Department (Doctor ID)</label>
+                    <input asp-for="HeadId" class="form-control" placeholder="Enter doctor ID" />
+                    <span asp-validation-for="HeadId" class="text-danger"></span>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

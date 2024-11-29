@@ -1,0 +1,61 @@
+﻿@model AddNurseVM
+
+@{
+    ViewData["Title"] = "Edit Nurse";
+}
+
+<div class="container mt-4">
+    <h2>Edit Nurse</h2>
+    <form asp-action="Edit" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="AspNetUsersId" />
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Age" class="form-label"></label>
+            <input asp-for="Age" class="form-control" type="number" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Address" class="form-label"></label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Shift" class="form-label"></label>
+            <select asp-for="Shift" class="form-control">
+                <option value="">-- Select Shift --</option>
+                @foreach (var shift in Enum.GetValues(typeof(Shift)))
+                {
+                    if(Model.Shift == (Shift)shift)
+                    {
+                        <option value="@shift"  selected>@shift</option>
+                    }
+                    else
+                    {
+                        <option value="@shift">@shift</option>   
+                    }
+                }
+            </select>
+            <span asp-validation-for="Shift" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Salary" class="form-label"></label>
+            <input asp-for="Salary" class="form-control" type="number" step="0.01" />
+            <span asp-validation-for="Salary" class="text-danger"></span>
+        </div>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">Save changes</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

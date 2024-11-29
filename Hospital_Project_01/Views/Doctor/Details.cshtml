@@ -1,0 +1,82 @@
+﻿@* @model Doctor
+
+@{
+    ViewData["Title"] = "Doctor Details";
+}
+
+<h2>Doctor Details</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">@Model.Name</h4>
+
+        <div class="mb-3">
+            <strong>Age:</strong>
+            <p>@Model.Age</p>
+        </div>
+
+        <div class="mb-3">
+            <strong>Address:</strong>
+            <p>@Model.Address </p>
+        </div>
+
+        <div class="mb-3">
+            <strong>Salary:</strong>
+            <p>@Model.Salary?.ToString("C") </p>
+        </div>
+
+        <div class="mb-3">
+            <strong>Rank:</strong>
+            <p>@Model.Rank.ToString() </p>
+        </div>
+
+        <div class="mb-3">
+            <strong>Shift:</strong>
+            <p>@Model.Shift.ToString()</p>
+        </div>
+
+        <div class="mb-3">
+            <strong>Department:</strong>
+            <p>@Model.Department?.Name </p>
+        </div>
+
+        <div class="mb-3">
+            <strong>User Account:</strong>
+            <p>@Model.AspNetUsersId</p>
+        </div>
+
+
+        <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-primary">Edit</a>
+        <a href="@Url.Action("Delete", new { id = Model.Id })" class="btn btn-danger">Delete</a>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+ *@
+
+ @model Doctor
+@{
+    ViewData["Title"] = "Doctor Details";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+
+<h2 class="text-2xl font-semibold mb-6">Doctor Details</h2>
+
+<div class="bg-white shadow-md rounded-lg p-6">
+    <h3 class="text-lg font-bold mb-4">@Model.Name</h3>
+    <div class="space-y-3">
+        <p><strong>Age:</strong> @Model.Age</p>
+        <p><strong>Address:</strong> @Model.Address</p>
+        <p><strong>Salary:</strong> @Model.Salary?.ToString("C")</p>
+        <p><strong>Rank:</strong> @Model.Rank.ToString()</p>
+        <p><strong>Shift:</strong> @Model.Shift.ToString()</p>
+        <p><strong>Department:</strong> @Model.Department?.Name</p>
+        <p><strong>User Account:</strong> @Model.AspNetUsersId</p>
+    </div>
+
+    <div class="flex justify-end space-x-4 mt-6">
+        <a href="@Url.Action("Edit", new { id = Model.Id })" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-300">Edit</a>
+        <a href="@Url.Action("Delete", new { id = Model.Id })" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-300">Delete</a>
+        <a href="@Url.Action("Index")" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Back to List</a>
+    </div>
+</div>

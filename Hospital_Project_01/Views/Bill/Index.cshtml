@@ -1,0 +1,112 @@
+﻿@model IEnumerable<DAL.Models.Bill>
+
+@{
+    ViewBag.Title = "Bill Index";
+}
+
+
+
+<div class="container mt-5">
+	<h2>Bills</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Search Card -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    Search Bill
+                </div>
+                <div class="card-body">
+                    <form method="get" action="@Url.Action("Index", "Bill")">
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <label for="billId">Bill ID</label>
+                                <input type="number" class="form-control" id="billId" name="billId" placeholder="Enter Bill ID">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="patientId">Patient ID</label>
+                                <input type="number" class="form-control" id="patientId" name="patientId" placeholder="Enter Patient ID">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                </div>
+            </div>
+
+            <a class="btn btn-outline-primary" asp-action="Add">Create Bill</a>
+
+            <!-- Bills Table -->
+            @if (Model != null && Model.Any())
+            {
+                <table class="table table-bordered table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th>Bill ID</th>
+                            <th>Patient ID</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var bill in Model)
+                        {
+                            <tr>
+                                <td>@bill.Id</td>
+                                <td>@bill.PatientId</td>
+                                <td>@bill.Amount</td>
+                                <td>@bill.Date.ToString("yyyy-MM-dd")</td>
+                                <td>
+                                    @if (bill.Paid)
+                                    {
+                                        <span class="badge bg-success">Paid</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning">Unpaid</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (!bill.Paid)
+                                    {
+                                        <button class="btn btn-sm btn-success mark-paid" data-id="@bill.Id">Mark as Paid</button>
+                                        <a class="btn btn-sm btn-info" asp-action="Edit" asp-route-id="@bill.Id">Edit</a>
+                                    }
+                                    <a class="btn btn-sm btn-outline-danger" asp-action ="Delete"  asp-route-id="@bill.Id">Delete</a>
+                                    <a class="btn btn-sm btn-dark" asp-action ="Details"  asp-route-id="@bill.Id">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-info mt-3">No bills found.</div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+	<script>
+		$(document).ready(function () {
+			$(".mark-paid").on("click", function () {
+				var billId = $(this).data("id");
+
+				$.ajax({
+					url: '@Url.Action("MarkAsPaid", "Bill")',
+					type: 'POST',
+					data: { id: billId },
+					success: function () {
+						location.reload();
+					},
+					error: function () {
+						alert("Error marking bill as paid.");
+					}
+				});
+			});
+		});
+	</script>
+}

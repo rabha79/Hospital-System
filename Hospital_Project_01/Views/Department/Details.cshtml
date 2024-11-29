@@ -1,0 +1,41 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "Department Details";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mb-4">Department Details</h2>
+            <div class="card p-5 shadow-sm rounded">
+                <dl class="row">
+                    <dt class="col-sm-4">Department Name:</dt>
+                    <dd class="col-sm-8">@Model.Name</dd>
+
+                    <dt class="col-sm-4">Head of Department (Doctor ID):</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.Head != null)
+                        {
+                            <strong>@Model.Head.Name</strong> 
+                            <br />
+                            <small class="text-muted">Rank: @Model.Head.Rank</small> 
+                            <br />
+                        }
+                        else
+                        {
+                            <span class="text-muted">No head assigned</span>
+                        }
+                    </dd>
+                </dl>
+
+
+
+                <div class="text-center mt-5">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

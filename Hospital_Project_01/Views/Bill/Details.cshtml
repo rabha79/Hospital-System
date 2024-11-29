@@ -1,0 +1,36 @@
+﻿@model Bill
+
+@{
+    ViewData["Title"] = "Bill Details";
+}
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h2>Bill Details</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Bill Information</h4>
+                <p><strong>Bill ID:</strong> @Model.Id</p>
+                <p><strong>Amount:</strong> @Model.Amount.ToString("C")</p>
+                <p><strong>Date:</strong> @Model.Date.ToString("yyyy-MM-dd")</p>
+                <p><strong>Status:</strong> @(Model.Paid ? "Paid" : "Unpaid")</p>
+            </div>
+
+            <div class="col-md-6">
+                <h4>Patient Information</h4>
+                <p><strong>Patient ID:</strong> @Model.Patient?.Id</p>
+                <p><strong>Patient Name:</strong> @Model.Patient?.Name</p>
+                <p><strong>Patient Age:</strong> @Model.Patient?.Age</p>
+                <p><strong>Patient Address:</strong> @Model.Patient?.Address</p>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+            <a asp-action="Index" asp-route-patientId="@Model.Patient?.Id" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+</div>
+

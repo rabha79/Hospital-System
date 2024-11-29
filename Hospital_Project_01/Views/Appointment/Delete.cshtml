@@ -1,0 +1,49 @@
+﻿@model Appointment
+
+@{
+    ViewData["Title"] = "Delete Appointment";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Delete Appointment</h2>
+
+    <div class="card mt-4">
+        <div class="card-header bg-danger text-white">
+            <h4>Are you sure you want to delete this appointment?</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Delete" method="post" >
+                <div class="form-group">
+                    <label asp-for="Id" >Appointment ID:</label>
+                    <p>@Model.Id</p>
+                    <input type="hidden" asp-for="Id" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="DoctorId">Doctor ID:</label>
+                    <p>@Model.DoctorId</p>
+                    <input type="hidden" asp-for="DoctorId" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="PatientId">Patient ID:</label>
+                    <p>@Model.PatientId</p>
+                    <input type="hidden" asp-for="PatientId" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Date">Appointment Date:</label>
+                    <p>@Model.Date</p>
+                    <input type="hidden" asp-for="Date" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Finished">Finished:</label>
+                    <p>@(Model.Finished ? "Yes" : "No")</p>
+                    <input type="hidden" asp-for="Finished" />
+                </div>
+
+				<button type="submit" class="btn btn-danger">Yes, Delete</button>
+				<a asp-action="Index" class="btn btn-secondary">Cancel</a>
+
+            </form>
+
+        </div>
+    </div>
+</div>

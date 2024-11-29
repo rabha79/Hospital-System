@@ -1,0 +1,187 @@
+﻿@* @model AddDoctorVM
+@{
+    ViewBag.Title = "Edit Doctor";
+}
+
+<h2>Edit Doctor</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Name" class="form-label">Doctor Name</label>
+        <input asp-for="Name" class="form-control" placeholder="Enter doctor's name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Age" class="form-label">Age</label>
+        <input asp-for="Age" class="form-control" placeholder="Enter age" />
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address" class="form-label">Address</label>
+        <input asp-for="Address" class="form-control" placeholder="Enter address" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Salary" class="form-label">Salary</label>
+        <input asp-for="Salary" class="form-control" placeholder="Enter salary" />
+        <span asp-validation-for="Salary" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Rank" class="form-label">Rank</label>
+        <select asp-for="Rank" class="form-control">
+            <option value="">Select Rank</option>
+            @foreach (var rank in Enum.GetValues(typeof(DoctorsRank)))
+            {
+                <option value="@rank">@rank</option>
+            }
+        </select>
+        <span asp-validation-for="Rank" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Shift" class="form-label">Shift</label>
+        <select asp-for="Shift" class="form-control">
+            <option value="">Select Shift</option>
+            @foreach (var shift in Enum.GetValues(typeof(Shift)))
+            {
+                <option value="@shift">@shift</option>
+            }
+        </select>
+        <span asp-validation-for="Shift" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DepartmentId" class="form-label">Department</label>
+        <select asp-for="DepartmentId" class="form-control">
+            <option value="">Select Department</option>
+            @foreach (var dept in ViewBag.Departments)
+            {
+                if(dept.Id == Model.DepartmentId)
+                {
+                    <option value="@dept.Id" selected >@dept.Name</option>
+                }
+                else
+                {
+                    <option value="@dept.Id" >@dept.Name</option>
+                }
+                
+            }
+        </select>
+        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AspNetUsersId" class="form-label">System User Account</label>
+        <input asp-for="AspNetUsersId" class="form-control" readonly/>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+ *@
+
+ @model AddDoctorVM
+@{
+    ViewBag.Title = "Edit Doctor" ;
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+
+<h2 class="text-2xl font-semibold mb-6">@ViewBag.Title</h2>
+
+<form asp-action="@ViewBag.Action" method="post" class="space-y-6">
+    <input type="hidden" asp-for="Id" />
+
+    <!-- Doctor Name -->
+    <div>
+        <label asp-for="Name" class="block text-sm font-medium text-gray-700">Doctor Name</label>
+        <input asp-for="Name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter doctor's name" />
+        <span asp-validation-for="Name" class="text-red-500 text-sm"></span>
+    </div>
+
+    <!-- Age -->
+    <div>
+        <label asp-for="Age" class="block text-sm font-medium text-gray-700">Age</label>
+        <input asp-for="Age" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter age" />
+        <span asp-validation-for="Age" class="text-red-500 text-sm"></span>
+    </div>
+
+    <!-- Address -->
+    <div>
+        <label asp-for="Address" class="block text-sm font-medium text-gray-700">Address</label>
+        <input asp-for="Address" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter address" />
+        <span asp-validation-for="Address" class="text-red-500 text-sm"></span>
+    </div>
+
+    <!-- Salary -->
+    <div>
+        <label asp-for="Salary" class="block text-sm font-medium text-gray-700">Salary</label>
+        <input asp-for="Salary" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter salary" />
+        <span asp-validation-for="Salary" class="text-red-500 text-sm"></span>
+    </div>
+
+    <!-- Rank -->
+    <div>
+        <label asp-for="Rank" class="block text-sm font-medium text-gray-700">Rank</label>
+        <select asp-for="Rank" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <option value="">Select Rank</option>
+            @foreach (var rank in Enum.GetValues(typeof(DoctorsRank)))
+            {
+                <option value="@rank">@rank</option>
+            }
+        </select>
+        <span asp-validation-for="Rank" class="text-red-500 text-sm"></span>
+    </div>
+
+    <!-- Shift -->
+    <div>
+        <label asp-for="Shift" class="block text-sm font-medium text-gray-700">Shift</label>
+        <select asp-for="Shift" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <option value="">Select Shift</option>
+            @foreach (var shift in Enum.GetValues(typeof(Shift)))
+            {
+                <option value="@shift">@shift</option>
+            }
+        </select>
+        <span asp-validation-for="Shift" class="text-red-500 text-sm"></span>
+    </div>
+
+    <!-- Department -->
+    <div>
+        <label asp-for="DepartmentId" class="block text-sm font-medium text-gray-700">Department</label>
+        <select asp-for="DepartmentId" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <option value="">Select Department</option>
+            @foreach (var dept in ViewBag.Departments)
+            {
+                if (dept.Id == Model.DepartmentId)
+                {
+                    <option value="@dept.Id" selected>@dept.Name</option>
+                }
+                else
+                {
+                    <option value="@dept.Id">@dept.Name</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="DepartmentId" class="text-red-500 text-sm"></span>
+    </div>
+
+    <!-- System User Account -->
+    <div>
+        <label asp-for="AspNetUsersId" class="block text-sm font-medium text-gray-700">System User Account</label>
+        <input asp-for="AspNetUsersId" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter system account ID" />
+        <span asp-validation-for="AspNetUsersId" class="text-red-500 text-sm"></span>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="flex justify-end space-x-4">
+        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-300">Save</button>
+        <a asp-action="Index" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300">Cancel</a>
+    </div>
+</form>

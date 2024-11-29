@@ -1,0 +1,69 @@
+﻿@model IEnumerable<DAL.Models.Admin>
+@{
+    ViewData["Title"] = "Admin List";
+}
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+
+<div class="bg-gray-100">
+    <div class="container mx-auto px-4 sm:px-8">
+        <div class="py-8">
+            <div>
+                <h2 class="text-2xl font-semibold leading-tight">Admin List</h2>
+            </div>
+            <div class="my-2 flex sm:flex-row flex-col">
+                <div class="flex flex-row mb-1 sm:mb-0">
+                    <div class="relative">
+                        <a href="@Url.Action("Add", "Admin")" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Add New Admin
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                    <table class="min-w-full leading-normal">
+                        <thead>
+                            <tr>
+                                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Name
+                                </th>
+                                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Age
+                                </th>
+                                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Address
+                                </th>
+                                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <p class="text-gray-900 whitespace-no-wrap">@item.Name</p>
+                                    </td>
+                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <p class="text-gray-900 whitespace-no-wrap">@item.Age</p>
+                                    </td>
+                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <p class="text-gray-900 whitespace-no-wrap">@item.Address</p>
+                                    </td>
+                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <a href="@Url.Action("Edit", "Admin", new { id = item.Id })" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</a>
+                                        <a href="@Url.Action("Details", "Admin", new { id = item.Id })" class="text-green-600 hover:text-green-900 mr-2">Details</a>
+                                        <a href="@Url.Action("Delete", "Admin", new { id = item.Id })" class="text-red-600 hover:text-red-900">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

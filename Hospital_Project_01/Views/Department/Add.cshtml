@@ -1,0 +1,29 @@
+﻿@model DepartmentVM
+@{
+    ViewData["Title"] = "Add Department";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Add New Department</h2>
+
+    <form asp-action="Add" method="post">
+        <div class="form-group mt-3">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control mt-2" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mt-3">
+            <label asp-for="HeadId" class="control-label">Head of Department (Doctor ID)</label>
+            <input asp-for="HeadId" class="form-control mt-2"/>
+            <span asp-validation-for="HeadId" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Add Department</button>
+    </form>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

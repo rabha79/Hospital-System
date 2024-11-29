@@ -1,0 +1,93 @@
+﻿
+ @model AddDoctorVM
+@{
+    ViewBag.Title = "Add Doctor";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+
+<div class="container mx-auto mt-8">
+    <h2 class="text-2xl font-bold text-center mb-6">Add New Doctor</h2>
+
+    <form asp-action="AddDoctor" method="post" class="space-y-4 bg-white p-6 rounded-lg shadow-lg">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label asp-for="Name" class="form-label font-semibold">Doctor Name</label>
+                <input asp-for="Name" class="form-input mt-1 block w-full border-gray-300 rounded-md" placeholder="Enter doctor's name" />
+                <span asp-validation-for="Name" class="text-red-600 text-sm"></span>
+            </div>
+
+            <div>
+                <label asp-for="Age" class="form-label font-semibold">Age</label>
+                <input asp-for="Age" class="form-input mt-1 block w-full border-gray-300 rounded-md" placeholder="Enter age" />
+                <span asp-validation-for="Age" class="text-red-600 text-sm"></span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label asp-for="Address" class="form-label font-semibold">Address</label>
+                <input asp-for="Address" class="form-input mt-1 block w-full border-gray-300 rounded-md" placeholder="Enter address" />
+                <span asp-validation-for="Address" class="text-red-600 text-sm"></span>
+            </div>
+
+            <div>
+                <label asp-for="Salary" class="form-label font-semibold">Salary</label>
+                <input asp-for="Salary" class="form-input mt-1 block w-full border-gray-300 rounded-md" placeholder="Enter salary" />
+                <span asp-validation-for="Salary" class="text-red-600 text-sm"></span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label asp-for="Rank" class="form-label font-semibold">Rank</label>
+                <select asp-for="Rank" class="form-select mt-1 block w-full border-gray-300 rounded-md">
+                    <option value="">Select Rank</option>
+                    @foreach (var rank in Enum.GetValues(typeof(DoctorsRank)))
+                    {
+                        <option value="@rank">@rank</option>
+                    }
+                </select>
+                <span asp-validation-for="Rank" class="text-red-600 text-sm"></span>
+            </div>
+
+            <div>
+                <label asp-for="Shift" class="form-label font-semibold">Shift</label>
+                <select asp-for="Shift" class="form-select mt-1 block w-full border-gray-300 rounded-md">
+                    <option value="">Select Shift</option>
+                    @foreach (var shift in Enum.GetValues(typeof(DAL.Models.Shift)))
+                    {
+                        <option value="@shift">@shift</option>
+                    }
+                </select>
+                <span asp-validation-for="Shift" class="text-red-600 text-sm"></span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label asp-for="DepartmentId" class="form-label font-semibold">Department</label>
+                <select asp-for="DepartmentId" class="form-select mt-1 block w-full border-gray-300 rounded-md">
+                    <option value="">Select Department</option>
+                    @foreach (var dept in ViewBag.Departments)
+                    {
+                        <option value="@dept.Id">@dept.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="DepartmentId" class="text-red-600 text-sm"></span>
+            </div>
+
+            <div>
+                <label asp-for="AspNetUsersId" class="form-label font-semibold">System User Account</label>
+                <input asp-for="AspNetUsersId" class="form-input mt-1 block w-full border-gray-300 rounded-md" placeholder="Enter system account ID" />
+                <span asp-validation-for="AspNetUsersId" class="text-red-600 text-sm"></span>
+                <div class="text-sm text-gray-500">If the doctor does not have an account, <a href="/Account/Register" class="text-blue-600 hover:underline">register an account here</a>.</div>
+            </div>
+        </div>
+
+        <div class="flex justify-end space-x-2">
+            <button type="submit" class="btn btn-primary bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">Add Doctor</button>
+            <a asp-action="Index" class="btn btn-secondary bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg">Cancel</a>
+        </div>
+    </form>
+</div>
